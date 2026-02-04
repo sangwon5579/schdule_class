@@ -71,7 +71,6 @@ def gui():
     window.geometry("640x800+150+10")
     window.resizable(False,False)
 
-    # ⭐ 과목별 색상 매핑
     course_colors = {}
     unique_courses = info["수업명"].unique()
 
@@ -84,11 +83,12 @@ def gui():
     Button(top_frame,text='BEFORE',width=10,
            command=lambda: before_schedule()).pack(side=LEFT,padx=10)
 
-    Label(
+    schedule_label = Label(
         top_frame,
-        text="시간표\n모든 경우의 수:"+str(len(all_schedules)),
+        text=f"시간표 {current_index+1}/{len(all_schedules)}\n모든 경우의 수:{len(all_schedules)}",
         width=20,height=2,bg="yellow",relief="solid"
-    ).pack(side=LEFT,padx=10)
+    )
+    schedule_label.pack(side=LEFT,padx=10)
 
     Button(top_frame,text='NEXT',width=10,
            command=lambda: next_schedule()).pack(side=LEFT,padx=10)
@@ -152,7 +152,7 @@ def gui():
 
                         cell.config(
                             text=new_text,
-                            bg=course_color  # ⭐ 핵심!
+                            bg=course_color 
                         )
 
 
@@ -161,6 +161,7 @@ def gui():
         if all_schedules:
             current_index=(current_index+1)%len(all_schedules)
             update_schdule(all_schedules[current_index])
+            schedule_label.config(text=f"시간표 {current_index+1}/{len(all_schedules)}\n모든 경우의 수:{len(all_schedules)}")
         else:
             messagebox.showinfo("info","유효한 시간표 없습니다.")
 
@@ -170,6 +171,7 @@ def gui():
         if all_schedules:
             current_index=(current_index-1)%len(all_schedules)
             update_schdule(all_schedules[current_index])
+            schedule_label.config(text=f"시간표 {current_index+1}/{len(all_schedules)}\n모든 경우의 수:{len(all_schedules)}")
         else:
             messagebox.showinfo("info","유효한 시간표 없습니다.")
 
